@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
+import { userRouter } from './routers/userRouter'
 
 const app = express()
 
@@ -27,3 +28,5 @@ app.get("/ping", async (req: Request, res: Response) => {
         }
     }
 })
+
+app.use("/users", userRouter)
