@@ -11,6 +11,24 @@ export class UserBusiness {
         public userDatabase: UserDatabase
     ){}
 
+    public getUsers = async (input: any) => {
+        const { q } = input
+
+        const usersDB = await this.userDatabase.findUsers(q)
+
+        const users: User[] = usersDB.map((userDB) => new User(
+                userDB.id,
+                userDB.name,
+                userDB.email,
+                userDB.password,
+                userDB.role,
+                userDB.created_at
+        ))
+        // const output = this.userDTO.createUserOutput(users)
+        // return output
+        return users
+    }
+
     public createUser = async (input: CreateUserInputDTO) => {
         const { id, name, email, password } = input
         

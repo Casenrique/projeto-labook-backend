@@ -19,6 +19,16 @@ export interface CreateUserOutputDTO {
     }
 }
 
+export interface GetUserOutputDTO {
+    messsage: string,
+    user: {
+        id: string,
+        name: string,
+        email: string,
+        createdAt: string
+    }
+}
+
 export class UserDTO {
     public createUserInput(
         id: unknown,
@@ -58,7 +68,7 @@ export class UserDTO {
 
     public createUserOutput(user: User): CreateUserOutputDTO {
         const dto: CreateUserOutputDTO = {
-            messsage: "Lista de todos os usuários cadastrados.",
+            messsage: "Usuário cadastrado com sucesso!",
             user: {
                 id: user.getId(),
                 name: user.getName(),
@@ -68,4 +78,11 @@ export class UserDTO {
         }
         return dto
     }
+
+    // public getUserOutput(user: User): GetUserOutputDTO {
+    //     const dto: GetUserOutputDTO = {
+    //         messsage: "Lista de todos os usuários cadastrados.",
+    //         user 
+    //     }
+    // }
 }
