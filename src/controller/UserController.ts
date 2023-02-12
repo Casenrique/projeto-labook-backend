@@ -9,23 +9,26 @@ export class UserController {
         private userBusiness: UserBusiness
     ){}
 
-    // public getUsers = async (req: Request, res: Response) => {
-    //     try {
-    //         const input = {
-    //             q: req.query.q
-    //         }
+    public getUsers = async (req: Request, res: Response) => {
+        try {
+            const input = {
+                q: req.query.q
+            }
 
-    //         const output = await this.userBusiness.getUsers(input)
+            const output = await this.userBusiness.getUsers(input)
 
-    //     } catch (error) {
-    //         console.log(error)
-    //         if (error instanceof BaseError) {
-    //             res.status(error.statusCode).send(error.message)
-    //         } else {
-    //             res.status(500).send("Erro inesperado")
-    //         }
-    //     }
-    // }
+            
+            res.status(200).send(output)
+
+        } catch (error) {
+            console.log(error)
+            if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
 
     public createUser = async (req: Request, res: Response) => {
         try {
