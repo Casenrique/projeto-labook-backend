@@ -1,4 +1,5 @@
 import { BadRequestError } from "../errors/BadRequestError"
+import { User } from "../models/User"
 
 
 export interface CreateUserInputDTO {
@@ -13,7 +14,8 @@ export interface CreateUserOutputDTO {
     user: {
         id: string,
         name: string,
-        email: string
+        email: string,
+        createdAt: string
     }
 }
 
@@ -24,6 +26,7 @@ export class UserDTO {
         email: unknown,
         password: unknown
     ): CreateUserInputDTO {
+
         if(!id || !name || !email || !password) {
             throw new BadRequestError("Dados inválidos")            
         }
@@ -53,5 +56,16 @@ export class UserDTO {
         return dto
     }
 
-    // public createUserOutput
+    public createUserOutput(user: User): CreateUserOutputDTO {
+        const dto: CreateUserOutputDTO = {
+            messsage: "Lista de todos os usuários cadastrados.",
+            user: {
+                id: user.getId(),
+                name: user.getName(),
+                email: user.getEmail(),
+                createdAt: user.getCreatedAt()
+            }
+        }
+        return dto
+    }
 }

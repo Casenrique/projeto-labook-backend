@@ -1,11 +1,15 @@
 import { UserDatabase } from "../database/UserDatabase";
-import { CreateUserInputDTO } from "../dtos/UserDTO";
+import { CreateUserInputDTO, UserDTO } from "../dtos/UserDTO";
 import { BadRequestError } from "../errors/BadRequestError";
 import { User } from "../models/User";
 import { UserDB } from "../types";
 
 
 export class UserBusiness {
+    constructor(
+        public userDTO: UserDTO,
+        public userDatabase: UserDatabase
+    ){}
 
     public createUser = async (input: CreateUserInputDTO) => {
         const { id, name, email, password } = input
@@ -26,8 +30,8 @@ export class UserBusiness {
             throw new BadRequestError("'password' deve possuir entre 8 e 12 caracteres, com letras maiúsculas e minúsculas e no mínimo um número e um caractere especial")
         }
 
-        const userDatabase = new UserDatabase()
-        const userDBExists = await userDatabase.findUserById(id)
+        // const userDatabase = new UserDatabase()
+        const userDBExists = await this.userDatabase.findUserById(id)
 
         if (userDBExists) {
             throw new BadRequestError("'id' já existe")
@@ -51,12 +55,14 @@ export class UserBusiness {
             created_at: newUser.getCreatedAt(),
         }
 
-        await userDatabase.insertUser(newUserDB)
+        await this.userDatabase.insertUser(newUserDB)
 
-        const output = {
-            message: "Produto registrado com sucesso!",
-            user: newUser
-        }
+        // const output = {
+        //     message: "Produto registrado com sucesso!",
+        //     user: newUser
+        // }
+
+        const output = this.userDTO.createUserOutput(newUser)
         return output
     }
 

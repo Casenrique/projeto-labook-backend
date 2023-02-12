@@ -5,6 +5,12 @@ import { BaseDatabase } from "./BaseDatabase";
 export class UserDatabase extends BaseDatabase {
     public static TABLE_USERS = "users"
 
+    public async findUsers(q: string | undefined) {
+        // if(q) {
+        //     const result: 
+        // }
+    }
+
     public async findUserById(id: string) {
         const [ userDB ]: UserDB[] | undefined[] = await BaseDatabase
             .connection(UserDatabase.TABLE_USERS)
