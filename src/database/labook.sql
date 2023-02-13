@@ -37,9 +37,9 @@ VALUES
 INSERT INTO posts (id, creator_id, content, likes, dislikes, created_at, updated_at)
 VALUES
 	("p001", "u001", "Estou adorando React!", 0, 0, "2023-02-10T14:48:00.000Z", "2023-02-10T14:48:00.000Z"),
-	("p002", "u002", "CSS é muito chato.", 0, 0, "2023-02-10T14:48:00.000Z", "2023-02-10T14:48:00.000Z"),
-	("p003", "u003", "POO é extremamente interessante!", 0, 0, "2023-02-10T14:48:00.000Z", "2023-02-10T14:48:00.000Z"),
-	("p004", "u004", "Nada a declarar...", 0, 0, "2023-02-10T14:48:00.000Z", "2023-02-10T14:48:00.000Z");
+	("p002", "u002", "CSS é muito chato.", 0, 1, "2023-02-10T14:48:00.000Z", "2023-02-10T14:48:00.000Z"),
+	("p003", "u003", "POO é extremamente interessante!", 3, 1, "2023-02-10T14:48:00.000Z", "2023-02-10T14:48:00.000Z"),
+	("p004", "u004", "Nada a declarar...", 1, 0, "2023-02-10T14:48:00.000Z", "2023-02-10T14:48:00.000Z");
 
 INSERT INTO likes_dislikes (user_id, post_id, like)
 VALUES
