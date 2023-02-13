@@ -6,19 +6,17 @@ import { PostCreatorModel } from "../types"
 
 export class PostBusiness {
     constructor(
-        private postDTO: PostDTO,
+        // private postDTO: PostDTO,
         private postDatabase: PostDatabase
-    ) {
-
-    }
+    ) {}
 
     public getPosts = async (q: string | undefined) => {
         
-        const postDatabase = new PostDatabase
+        // const postDatabase = new PostDatabase
         const { 
             postsDB,
             creatorsDB
-         } = await postDatabase.getPostWithCreator(q)
+         } = await this.postDatabase.getPostWithCreator(q)
 
          const posts: PostCreatorModel[] = postsDB.map((postDB) => {
             const post = new Post(
@@ -31,9 +29,14 @@ export class PostBusiness {
                 getCreator(postDB.creator_id)
             )
 
+            const postToBusinesModel = post.toBusinessModel()
+            // console.log(postToBusinesModel)
+            // const postDTO = new PostDTO
+            // const newPostOutput = postDTO.getPostOutput(postToBusinesModel)
+          
             return post.toBusinessModel()
          })
-         console.log(posts)
+        //  console.log(posts)
 
          function getCreator(creatorId: string) {
             const creator = creatorsDB.find((creatorDB) => {
@@ -46,7 +49,6 @@ export class PostBusiness {
          }
 
         //  const output = this.postDTO.getPostOutput(posts)
-
         // return output
         return posts
     }

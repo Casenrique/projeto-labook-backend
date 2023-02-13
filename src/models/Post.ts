@@ -33,8 +33,8 @@ export class Post {
             content: this.content,
             likes: this.likes,
             dislikes: this.dislikes,
-            created_at: this.createdAt,
-            updated_at: this.updatedAt,
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
             creator: this.creator
         }
     }

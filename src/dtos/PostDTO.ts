@@ -16,10 +16,10 @@ export interface GetPostCreatorOutputDTO {
     } 
 }
 
-export class PostDTO {
+export class PostDTO extends Post {
     public getPostOutput(post: Post): GetPostCreatorOutputDTO {
         const dto: GetPostCreatorOutputDTO = {
-            messsage: "Lista dos posts com seu respectivo criador.",
+            messsage: "Lista dos posts com seu respectivo criador.",            
             post: {
                 id: post.getId(),
                 content: post.getContent(),
