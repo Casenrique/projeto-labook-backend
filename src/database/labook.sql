@@ -4,7 +4,7 @@ CREATE TABLE users (
     name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    role TEXT DEFAULT "User" NOT NULL,
+    role TEXT DEFAULT "NORMAL" NOT NULL,
     created_at TEXT DEFAULT (DATETIME()) NOT NULL
 );
 
@@ -17,22 +17,28 @@ CREATE TABLE posts (
     created_at TEXT DEFAULT (DATETIME()) NOT NULL,
     updated_at TEXT NOT NULL,
     FOREIGN KEY (creator_id) REFERENCES users (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE likes_dislikes (
     user_id TEXT NOT NULL,
     post_id TEXT NOT NULL,
     like INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY (post_id) REFERENCES posts(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
-INSERT INTO users (id, name, email, password, created_at)
+INSERT INTO users (id, name, email, password, created_at, role)
 VALUES
-	("u001", "Carlos Henrique", "carloshenriquesouza.eng@gmail.com", "Abc12345#","2023-02-10T14:48:00.000Z"),
-	("u002", "Professor X", "professorx@marvel.com", "Produto$m4nual", "2023-02-10T14:48:00.000Z"),
-    ("u003", "Feiticeira Escarlate", "feiticeiraescarlate@marvel.com", "MeusFilho$Minh4Vid4", "2023-02-10T14:48:00.000Z"),
-    ("u004", "Flash", "flash@dc.com", "Fla$hR3vers0", "2023-02-10T14:48:00.000Z");
+	("u001", "Carlos Henrique", "carloshenriquesouza.eng@gmail.com", "Abc12345#","2023-02-10T14:48:00.000Z", "ADMIN"),
+	("u002", "Professor X", "professorx@marvel.com", "Produto$m4nual", "2023-02-10T14:48:00.000Z", "NORMAL"),
+    ("u003", "Feiticeira Escarlate", "feiticeiraescarlate@marvel.com", "MeusFilho$Minh4Vid4", "2023-02-10T14:48:00.000Z", "NORMAL"),
+    ("u004", "Flash", "flash@dc.com", "Fla$hR3vers0", "2023-02-10T14:48:00.000Z", "NORMAL");
 
 INSERT INTO posts (id, creator_id, content, likes, dislikes, created_at, updated_at)
 VALUES
