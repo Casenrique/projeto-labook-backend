@@ -3,7 +3,6 @@ import { User } from "../models/User"
 
 
 export interface CreateUserInputDTO {
-    id: string,
     name: string,
     email: string,
     password: string
@@ -37,13 +36,13 @@ export class UserDTO {
         password: unknown
     ): CreateUserInputDTO {
 
-        if(!id || !name || !email || !password) {
+        if (!name || !email || !password) {
             throw new BadRequestError("Dados inválidos")            
         }
 
-        if (typeof id !== "string") {
-            throw new BadRequestError("'id' deve ser string")
-        }
+        // if (typeof id !== "string") {
+        //     throw new BadRequestError("'id' deve ser string")
+        // }
 
         if (typeof name !== "string") {
             throw new BadRequestError("'name' deve ser string")
@@ -58,7 +57,6 @@ export class UserDTO {
         }
 
         const dto: CreateUserInputDTO = {
-            id,
             name,
             email,
             password
