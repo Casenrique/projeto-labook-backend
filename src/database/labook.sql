@@ -63,3 +63,7 @@ SELECT * FROM likes_dislikes;
 DROP TABLE users;
 DROP TABLE posts;
 DROP TABLE likes_dislikes;
+
+UPDATE users
+SET id = "e79fdbf9-d332-47e0-9ecf-8e85ea7f02e2"
+WHERE id = "u003";
