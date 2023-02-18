@@ -18,23 +18,23 @@ export class UserBusiness {
     ){}
 
     public getUsers = async (input: any) => {
-        const { q, token } = input
+        const { q } = input
 
-        if(token === undefined) {
-            throw new BadRequestError("token ausente")
-        }
+        // if(token === undefined) {
+        //     throw new BadRequestError("token ausente")
+        // }
 
-        const payload = this.tokenManager.getPayload(token)
+        // const payload = this.tokenManager.getPayload(token)
 
-        if(payload === null) {
-            throw new BadRequestError("token inválido")
-        }
+        // if(payload === null) {
+        //     throw new BadRequestError("token inválido")
+        // }
 
-        // const creatorId = payload.id
+        // // const creatorId = payload.id
 
-        if(payload.role !== USER_ROLES.ADMIN) {
-            throw new BadRequestError("Somente o administrador de sistema pode acessar esse recurso.")
-        }
+        // if(payload.role !== USER_ROLES.ADMIN) {
+        //     throw new BadRequestError("Somente o administrador de sistema pode acessar esse recurso.")
+        // }
 
         const usersDB = await this.userDatabase.findUsers(q)
 
@@ -78,7 +78,7 @@ export class UserBusiness {
             throw new BadRequestError("'password' deve possuir entre 6 e 10 caracteres, com letras maiúsculas e minúsculas e no mínimo um número e um caractere especial")
         }
 
-        const userEmailAlreadyExists = await this.userDatabase.searchEmail(input)
+        const userEmailAlreadyExists: UserDB | undefined = await this.userDatabase.searchByEmail(email)
 
         if(userEmailAlreadyExists) {
             throw new BadRequestError("'email' já cadastrado.")
