@@ -1,3 +1,5 @@
+import { CreateUserInputDTO } from "../dtos/UserDTO";
+import { User } from "../models/User";
 import { UserDB } from "../types";
 import { BaseDatabase } from "./BaseDatabase";
 
@@ -24,7 +26,16 @@ export class UserDatabase extends BaseDatabase {
             .connection(UserDatabase.TABLE_USERS)
             .where({ id })
         return userDB
-    }    
+    }
+    
+    public async searchByEmail(email: string): Promise<UserDB> {
+        const result: UserDB[] = await BaseDatabase
+            .connection(UserDatabase.TABLE_USERS)
+            .select()
+            .where({ email })
+
+            return result[0]
+    }
     
     
     public async insertUser(newUserDB: UserDB) {

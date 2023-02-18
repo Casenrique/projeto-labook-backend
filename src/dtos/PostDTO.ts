@@ -1,5 +1,9 @@
 import { Post } from "../models/Post"
 
+export interface GetPostsInputDTO {
+    token: string | undefined
+}
+
 export interface GetPostCreatorOutputDTO {
     messsage: string,
     post: {
@@ -14,6 +18,28 @@ export interface GetPostCreatorOutputDTO {
             name: string
         }
     } 
+}
+
+export interface CreatePostInputDTO {
+    token: string | undefined,
+    content: unknown
+}
+
+export interface EditPostInputDTO {
+    idToEdit: string,
+    token: string | undefined,
+    content: unknown
+}
+
+export interface DeletePostInputDTO {
+    idToDelete: string,
+    token: string | undefined
+}
+
+export interface LikeOrDislikePostInputDTO {
+    idToLikeOrDislike: string,
+    token: string | undefined,
+    like: unknown
 }
 
 export class PostDTO extends Post {
