@@ -1,17 +1,39 @@
+import { TokenExpiredError } from "jsonwebtoken"
 import { PostDatabase } from "../database/PostDatabase"
-import { PostDTO } from "../dtos/PostDTO"
+import { GetPostsInputDTO, PostDTO } from "../dtos/PostDTO"
+import { BadRequestError } from "../errors/BadRequestError"
 import { Post } from "../models/Post"
+import { IdGenerator } from "../services/IdGenerator"
+import { TokenManager } from "../services/TokenManager"
 import { PostCreatorModel } from "../types"
 
 
 export class PostBusiness {
     constructor(
         // private postDTO: PostDTO,
-        private postDatabase: PostDatabase
+        private postDatabase: PostDatabase,
+        private tokenManager: TokenManager,
+        private idGenerator: IdGenerator
     ) {}
 
-    public getPosts = async (q: string | undefined) => {
+    public getPosts = async (input: GetPostsInputDTO) => {
         
+        const { q, token} = input
+
+        if(typeof q !== "string") {
+            throw new BadRequestError("'q' deve ser string")
+        }
+        
+        if(token === undefined) {
+            throw new BadRequestError("token ausente")
+        }
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if(payload === null) {
+            throw new BadRequestError("token inválido")
+        }
+
         // const postDatabase = new PostDatabase
         const { 
             postsDB,
@@ -30,14 +52,10 @@ export class PostBusiness {
             )
 
             const postToBusinesModel = post.toBusinessModel()
-            // console.log(postToBusinesModel)
-            // const postDTO = new PostDTO
-            // const newPostOutput = postDTO.getPostOutput(postToBusinesModel)
-          
-            return post.toBusinessModel()
+                      
+            return postToBusinesModel
          })
-        //  console.log(posts)
-
+    
          function getCreator(creatorId: string) {
             const creator = creatorsDB.find((creatorDB) => {
                 return creatorDB.id === creatorId
