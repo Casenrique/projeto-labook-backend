@@ -18,23 +18,23 @@ export class UserBusiness {
     ){}
 
     public getUsers = async (input: any) => {
-        const { q } = input
+        const { q, token } = input
 
-        // if(token === undefined) {
-        //     throw new BadRequestError("token ausente")
-        // }
+        if(token === undefined) {
+            throw new BadRequestError("token ausente")
+        }
 
-        // const payload = this.tokenManager.getPayload(token)
+        const payload = this.tokenManager.getPayload(token)
 
-        // if(payload === null) {
-        //     throw new BadRequestError("token inválido")
-        // }
+        if(payload === null) {
+            throw new BadRequestError("token inválido")
+        }
 
-        // // const creatorId = payload.id
+        // const creatorId = payload.id
 
-        // if(payload.role !== USER_ROLES.ADMIN) {
-        //     throw new BadRequestError("Somente o administrador de sistema pode acessar esse recurso.")
-        // }
+        if(payload.role !== USER_ROLES.ADMIN) {
+            throw new BadRequestError("Somente o administrador de sistema pode acessar esse recurso.")
+        }
 
         const usersDB = await this.userDatabase.findUsers(q)
 
@@ -147,14 +147,14 @@ export class UserBusiness {
             userDB.role,
             userDB.created_at
         )
-
+     
         const hashedPassword = newUser.getPassword()
 
         const passwordMatches = await this.hashManager.compare(password, hashedPassword)
 
-        const newUserDB = newUser.toDBModel()
-
-        await this.userDatabase.insertUser(newUserDB)
+        if(!passwordMatches) {
+            throw new BadRequestError("'password' incorreto")
+        }
 
         const payload: TokenPayLoad = {
             id: newUser.getId(),
@@ -164,7 +164,7 @@ export class UserBusiness {
 
         const token = this.tokenManager.createToken(payload)
 
-        const output: CreateUserOutputDTO = {
+        const output: LoginOutputDTO = {
             token
         }
 

@@ -1,6 +1,7 @@
 import { Post } from "../models/Post"
 
 export interface GetPostsInputDTO {
+    q: unknown | undefined,
     token: string | undefined
 }
 
