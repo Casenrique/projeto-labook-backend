@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PostBusiness } from "../business/PostBusiness";
-import { CreatePostInputDTO, GetPostsInputDTO, PostDTO } from "../dtos/PostDTO";
+import { CreatePostInputDTO, DeletePostInputDTO, EditPostInputDTO, GetPostsInputDTO } from "../dtos/PostDTO";
 import { BaseError } from "../errors/BaseError";
 
 
@@ -54,4 +54,50 @@ export class PostController {
             }
         }
     }
+
+    public editPost = async (req: Request, res: Response) => {
+        try {
+            const input: EditPostInputDTO = {
+                idToEdit: req.params.id,
+                token: req.headers.authorization,
+                content: req.body.content
+            }
+
+            const output = await this.postBusiness.editPost(input)
+
+            res.status(200).send(output)
+
+        } catch (error) {
+            console.log(error)
+
+            if(error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
+
+    public deletePost = async (req: Request, res: Response) => {
+        try {
+            const input: DeletePostInputDTO = {
+                idToDelete: req.params.id,
+                token: req.headers.authorization,
+            }
+
+            const output = await this.postBusiness.deletePost(input)
+
+            res.status(200).send(output)
+
+        } catch (error) {
+            console.log(error)
+
+            if(error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
+
 }
