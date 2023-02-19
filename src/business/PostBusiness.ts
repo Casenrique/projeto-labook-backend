@@ -1,6 +1,7 @@
 import { TokenExpiredError } from "jsonwebtoken"
 import { PostDatabase } from "../database/PostDatabase"
-import { GetPostsInputDTO, PostDTO } from "../dtos/PostDTO"
+import { UserDatabase } from "../database/UserDatabase"
+import { CreatePostInputDTO, GetPostCreatorOutputDTO, GetPostsInputDTO, PostDTO } from "../dtos/PostDTO"
 import { BadRequestError } from "../errors/BadRequestError"
 import { Post } from "../models/Post"
 import { IdGenerator } from "../services/IdGenerator"
@@ -16,7 +17,7 @@ export class PostBusiness {
         private idGenerator: IdGenerator
     ) {}
 
-    public getPosts = async (input: GetPostsInputDTO) => {
+    public getPosts = async (input: GetPostsInputDTO): Promise<PostCreatorModel[]> => {
         
         const { q, token} = input
 
@@ -56,7 +57,7 @@ export class PostBusiness {
             return postToBusinesModel
          })
     
-         function getCreator(creatorId: string) {
+        function getCreator(creatorId: string) {
             const creator = creatorsDB.find((creatorDB) => {
                 return creatorDB.id === creatorId
             })
@@ -65,9 +66,53 @@ export class PostBusiness {
                 name: creator.name
             }
          }
-
-        //  const output = this.postDTO.getPostOutput(posts)
-        // return output
+        
         return posts
+    }
+
+    public createPost = async (input: CreatePostInputDTO): Promise<void> => {
+        
+        const { content, token } = input
+       
+        if(token === undefined) {
+            throw new BadRequestError("token ausente")
+        }
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if(payload === null) {
+            throw new BadRequestError("token inválido")
+        }
+
+        if(typeof content !== "string") {
+            throw new BadRequestError("'content' deve ser string")
+        }
+
+        const id = this.idGenerator.generate()
+        const creatorId = payload.id
+        const creatorName = payload.name
+        const createdAt = new Date().toISOString()
+        const updatedAt = new Date().toISOString()
+
+        function getCreator(creatorId: string, creatorName: string) {
+            return {
+                id: creatorId,
+                name: creatorName
+            }
+         }
+        const post = new Post(
+            id,
+            content,
+            0,
+            0,
+            createdAt,
+            updatedAt,
+            getCreator(creatorId, creatorName)
+        )
+
+        const postDB = post.toDBModel()
+
+        await this.postDatabase.insert(postDB)
+
     }
 }

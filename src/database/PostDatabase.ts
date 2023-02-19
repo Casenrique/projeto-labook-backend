@@ -42,4 +42,12 @@ export class PostDatabase extends BaseDatabase {
         }
     }
 
+    public insert = async (postDB: PostDB) => {
+        await BaseDatabase
+            .connection(PostDatabase.TABLE_POSTS)
+            .insert(postDB)
+    }  
+
+
+
 }
