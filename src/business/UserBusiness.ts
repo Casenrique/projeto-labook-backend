@@ -74,8 +74,8 @@ export class UserBusiness {
             throw new BadRequestError("'email' deve ser de um domínio válido")
         }
 
-        if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,10}$/g)) {
-            throw new BadRequestError("'password' deve possuir entre 6 e 10 caracteres, com letras maiúsculas e minúsculas e no mínimo um número e um caractere especial")
+        if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,12}$/g)) {
+            throw new BadRequestError("'password' deve possuir entre 6 e 12 caracteres, com letras maiúsculas e minúsculas e no mínimo um número e um caractere especial")
         }
 
         const userEmailAlreadyExists: UserDB | undefined = await this.userDatabase.searchByEmail(email)

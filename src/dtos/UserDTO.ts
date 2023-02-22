@@ -1,6 +1,3 @@
-import { BadRequestError } from "../errors/BadRequestError"
-import { User } from "../models/User"
-
 export interface GetUserInputDTO {
     q: string | string[] | undefined ,
     token: string | undefined

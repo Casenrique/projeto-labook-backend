@@ -1,5 +1,4 @@
-import { CreatorPost, PostCreatorModel, PostDB } from "../types"
-
+import { PostCreatorModel, PostDB } from "../types"
 
 export class Post {
     constructor(
@@ -60,6 +59,22 @@ export class Post {
 
     public setLikes(value: number): void {
         this.likes = value
+    }
+
+    public addLike() {
+        this.likes += 1
+    }
+
+    public removeLike() {
+        this.likes -= 1
+    }
+
+    public addDislike() {
+        this.dislikes += 1
+    }
+
+    public removeDislike() {
+        this.dislikes -= 1
     }
 
     public getDislikes(): number {
