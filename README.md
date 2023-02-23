@@ -34,7 +34,7 @@ Requisições para a API devem seguir os padrões:
 
 # Banco de dados
 
-![projeto-labook](../../Labenu/projeto-labook-backend/img/projeto-labook.png)
+![projeto-labook (2)](https://user-images.githubusercontent.com/29845719/216036534-2b3dfb48-7782-411a-bffd-36245b78594e.png)
 
 ## Documentação
 [Link Documentação](https://documenter.getpostman.com/view/24424903/2s93CLttxF)
