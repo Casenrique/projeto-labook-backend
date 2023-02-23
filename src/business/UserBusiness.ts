@@ -1,6 +1,7 @@
 import { UserDatabase } from "../database/UserDatabase";
 import { CreateUserInputDTO, CreateUserOutputDTO, LoginInputDTO, LoginOutputDTO } from "../dtos/UserDTO";
 import { BadRequestError } from "../errors/BadRequestError";
+import { ConflictError } from "../errors/Conflict";
 import { NotFoundError } from "../errors/NotFoundError";
 import { User } from "../models/User";
 import { HashManager } from "../services/HashManager";
@@ -81,7 +82,7 @@ export class UserBusiness {
         const userEmailAlreadyExists: UserDB | undefined = await this.userDatabase.searchByEmail(email)
 
         if(userEmailAlreadyExists) {
-            throw new BadRequestError("'email' já cadastrado.")
+            throw new ConflictError("'email' já cadastrado.")
         }
 
         const id = this.idGenerator.generate()

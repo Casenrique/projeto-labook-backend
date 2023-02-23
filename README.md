@@ -1,190 +1,70 @@
-# Projeto Labook
+# **Projeto Labecommerce**
+
 O Labook é uma rede social com o objetivo de promover a conexão e interação entre pessoas. Quem se cadastrar no aplicativo poderá criar e curtir publicações.
 
-Agora que temos as bases de criação de APIs e banco de dados, o próximo nível é a implementação de segurança e códigos mais escaláveis. Veremos durante o prazo de entrega desse projeto inúmeros conceitos e formas de desenvolvimento seguindo padrões de design e arquitetura, e seu desafio será unir as funcionalidades com as boas práticas de código.
+Aplicação back-end de servidor express com banco de dados sqlite3.
 
-# Conteúdos abordados
-- NodeJS
-- Typescript
-- Express
-- SQL e SQLite
-- Knex
-- POO
-- Arquitetura em camadas
-- Geração de UUID
-- Geração de hashes
-- Autenticação e autorização
-- Roteamento
-- Postman
+## Índice
+- <a href="#métodos">Métodos disponíveis na API</a>
+- <a href="#respostas">Respostas esperadas</a>
+- <a href="#documentação">Documentação</a>
+- <a href="#abordados">Conteúdos abordados</a>
+- <a href="#pessoa">Pessoa autora</a>
+- <a href="#próximos">Próximos passos</a>
+
+
+## Métodos
+Requisições para a API devem seguir os padrões:
+| Método | Descrição |
+|---|---|
+| `GET` | Retorna informações de um ou mais registros. |
+| `POST` | Utilizado para criar um novo registro. |
+| `PUT` | Atualiza dados de um registro ou altera sua situação. |
+| `DELETE` | Remove um registro do sistema. |
+
+## Respostas
+
+| Código | Descrição |
+|---|---|
+| `200` | Requisição executada com sucesso (success).|
+| `201` | Recurso criado com sucesso (success).|
+| `400` | Erros de validação ou os campos informados não existem no sistema.|
+| `404` | Registro pesquisado não encontrado (Not found).|
+| `409` | Registro pesquisado já existente.|
 
 # Banco de dados
-![projeto-labook (1)](https://user-images.githubusercontent.com/29845719/215466903-95fcd408-0089-45b5-8a10-ce06730ef29c.png)
 
-https://dbdiagram.io/d/63d16443296d97641d7c1ae1
+![projeto-labook](../../Labenu/projeto-labook-backend/img/projeto-labook.png)
 
-# Lista de requisitos
-- Endpoints
-    - [ ]  signup
-    - [ ]  login
-    - [ ]  get posts
-    - [ ]  create post
-    - [ ]  edit post
-    - [ ]  delete post
-    - [ ]  like / dislike post
+## Documentação
+[Link Documentação](https://documenter.getpostman.com/view/24424903/2s93CLttxF)
 
-- Autenticação e autorização
-    - [ ]  identificação UUID
-    - [ ]  senhas hasheadas com Bcrypt
-    - [ ]  tokens JWT
- 
- - Código
-    - [ ]  POO
-    - [ ]  Arquitetura em camadas
-    - [ ]  Roteadores no Express
+## Tecnologias utilizadas e conteúdos abordados
 
-# Exemplos de requisição
+1. [Node.js](https://nodejs.org/en/)
+2. [Typescript](https://www.typescriptlang.org/)
+3. [Express](https://expressjs.com/pt-br/)
+4. [Cors](https://www.npmjs.com/package/cors)
+5. [Knex](https://knexjs.org/)
+6. [Sqlite3](https://www.sqlitetutorial.net/)
+7. [Programação orientada a objetos]()
+8. [Arquitetura em camadas]()
+9. [Geração de UUID](https://www.npmjs.com/package/uuid)
+10. [Geração de hashes](https://www.npmjs.com/package/bcrypt)
+11. [Autenticação e autorização](https://www.npmjs.com/package/jsonwebtoken)
+12. [Roteamento](https://expressjs.com/pt-br/api.html#router)
+13. [Postman](https://www.postman.com/)
 
-## Signup
-Endpoint público utilizado para cadastro. Devolve um token jwt.
-```typescript
-// request POST /users/signup
-// body JSON
-{
-  "name": "Beltrana",
-  "email": "beltrana@email.com",
-  "password": "beltrana00"
-}
+## Pessoas Autoras
 
-// response
-// status 201 CREATED
-{
-  token: "um token jwt"
-}
-```
+<img style="width:200px" src="https://github.com/Casenrique.png" alt="Imagem do desenvolvedor">
 
-## Login
-Endpoint público utilizado para login. Devolve um token jwt.
-```typescript
-// request POST /users/login
-// body JSON
-{
-  "email": "beltrana@email.com",
-  "password": "beltrana00"
-}
+[Linkedin](https://www.linkedin.com/in/carlos-henrique-de-souza-1767311a/)
 
-// response
-// status 200 OK
-{
-  token: "um token jwt"
-}
-```
+## Próximos passos
 
-## Get posts
-Endpoint protegido, requer um token jwt para acessá-lo.
-```typescript
-// request GET /posts
-// headers.authorization = "token jwt"
+- [ ] Refatoração de código para código mais limpo.
 
-// response
-// status 200 OK
-[
-    {
-        "id": "uma uuid v4",
-        "content": "Hoje vou estudar POO!",
-        "likes": 2,
-        "dislikes" 1,
-        "createdAt": "2023-01-20T12:11:47:000Z"
-        "updatedAt": "2023-01-20T12:11:47:000Z"
-        "creator": {
-            "id": "uma uuid v4",
-            "name": "Fulano"
-        }
-    },
-    {
-        "id": "uma uuid v4",
-        "content": "kkkkkkkkkrying",
-        "likes": 0,
-        "dislikes" 0,
-        "createdAt": "2023-01-20T15:41:12:000Z"
-        "updatedAt": "2023-01-20T15:49:55:000Z"
-        "creator": {
-            "id": "uma uuid v4",
-            "name": "Ciclana"
-        }
-    }
-]
-```
 
-## Create post
-Endpoint protegido, requer um token jwt para acessá-lo.
-```typescript
-// request POST /posts
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "content": "Partiu happy hour!"
-}
 
-// response
-// status 201 CREATED
-```
 
-## Edit post
-Endpoint protegido, requer um token jwt para acessá-lo.<br>
-Só quem criou o post pode editá-lo e somente o conteúdo pode ser editado.
-```typescript
-// request PUT /posts/:id
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "content": "Partiu happy hour lá no point de sempre!"
-}
-
-// response
-// status 200 OK
-```
-
-## Delete post
-Endpoint protegido, requer um token jwt para acessá-lo.<br>
-Só quem criou o post pode deletá-lo. Admins podem deletar o post de qualquer pessoa.
-
-```typescript
-// request DELETE /posts/:id
-// headers.authorization = "token jwt"
-
-// response
-// status 200 OK
-```
-
-## Like or dislike post (mesmo endpoint faz as duas coisas)
-Endpoint protegido, requer um token jwt para acessá-lo.<br>
-Quem criou o post não pode dar like ou dislike no mesmo.<br><br>
-Caso dê um like em um post que já tenha dado like, o like é desfeito.<br>
-Caso dê um dislike em um post que já tenha dado dislike, o dislike é desfeito.<br><br>
-Caso dê um like em um post que tenha dado dislike, o like sobrescreve o dislike.<br>
-Caso dê um dislike em um post que tenha dado like, o dislike sobrescreve o like.
-### Like (funcionalidade 1)
-```typescript
-// request PUT /posts/:id/like
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "like": true
-}
-
-// response
-// status 200 OK
-```
-
-### Dislike (funcionalidade 2)
-```typescript
-// request PUT /posts/:id/like
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "like": false
-}
-
-// response
-// status 200 OK
-```
