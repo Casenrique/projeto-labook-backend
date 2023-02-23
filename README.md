@@ -32,7 +32,7 @@ Requisições para a API devem seguir os padrões:
 | `404` | Registro pesquisado não encontrado (Not found).|
 | `409` | Registro pesquisado já existente.|
 
-# Banco de dados
+## Banco de dados
 
 ![projeto-labook ](https://user-images.githubusercontent.com/29845719/216036534-2b3dfb48-7782-411a-bffd-36245b78594e.png)
 
